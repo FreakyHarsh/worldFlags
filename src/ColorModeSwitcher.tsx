@@ -24,11 +24,9 @@ export const ColorModeSwitcher: React.FC<ColorModeSwitcherProps> = (props) => {
       marginLeft='2'
       onClick={toggleColorMode}
       icon={
-        <Flex p={2}>
+        <Flex p={2} fontSize={['sm', 'md']} fontWeight={400}>
           <SwitchIcon />
-          <Text fontSize={['sm', 'md', 'lg', 'xl']} fontWeight={400} ml={2}>
-            {colorModeText}
-          </Text>
+          <Text ml={1}>{colorModeText}</Text>
         </Flex>
       }
       aria-label={`Switch to mode`}

@@ -1,13 +1,27 @@
 import * as React from 'react';
-import { ChakraProvider, theme, Flex, Divider, Text, Heading } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 
+import { ChakraProvider } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
+import { Global } from '@emotion/react';
+
+import { Home } from './pages/Home';
+
+const Fonts = () => (
+  <Global
+    styles={
+      "@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');"
+    }
+  />
+);
+
+const theme = extendTheme({
+  fonts: {
+    body: 'Open Sans',
+  },
+});
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Flex align='center' justify='space-between' p={2} mx={{ base: '5%' }}>
-      <Heading fontSize={['sm', 'md', 'lg', 'xl']}>Where in the world?</Heading>
-      <ColorModeSwitcher />
-    </Flex>
-    <Divider />
+    <Fonts />
+    <Home />
   </ChakraProvider>
 );
