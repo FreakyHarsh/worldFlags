@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Stack, Box, Input, Menu, MenuButton, Button, MenuList, MenuItem } from '@chakra-ui/react';
+import { useStore } from '../store/store';
+import { useHistory } from 'react-router-dom';
 
 export const SearchMenu: React.FC = () => {
-  const [dropDownTitle, setDropDownTitle] = useState('Filter By Region');
   const [search, setSearch] = useState(null);
-
-  const onMenuHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-    setDropDownTitle((e.target as any).firstChild.data);
-
-  const regions = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+  const {
+    state: { region },
+    dispatch,
+  } = useStore();
+  let history = useHistory();
+  const onMenuHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const region = (e.target as any).firstChild.data;
+    dispatch({ type: 'setRegion', payload: region });
+    history.push(region);
+  };
+  const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
   return (
     <div>
       <Stack
@@ -25,7 +32,7 @@ export const SearchMenu: React.FC = () => {
         <Box>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              {dropDownTitle}
+              {region}
             </MenuButton>
             <MenuList onClick={onMenuHandler}>
               {regions.map((region) => (

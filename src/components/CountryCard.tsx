@@ -32,22 +32,22 @@ export const CountryCard = ({ flag, name, population, region }: CardProps) => {
           ></div>
         </Box>
         <VStack align='flex-start' p={4} bg={bg}>
-          <Text fontWeight='600' fontSize={16} pt={2}>
+          <Text fontWeight='600' fontSize={16} pt={2} w='100%' isTruncated>
             {name}
           </Text>
-          <Text fontSize={14} fontWeight='300'>
+          <Text fontSize={13} fontWeight='300' mt='0'>
             <Box as='span' fontWeight='600'>
               Population:{' '}
             </Box>
             {population.toLocaleString()}
           </Text>
-          <Text fontSize={14} fontWeight='300'>
+          <Text fontSize={13} fontWeight='300'>
             <Box as='span' fontWeight='600'>
               Region:{' '}
             </Box>
             {region}
           </Text>
-          <Text fontSize={14} fontWeight='300'>
+          <Text fontSize={13} fontWeight='300' w='100%' isTruncated>
             <Box as='span' fontWeight='600'>
               Country:{' '}
             </Box>

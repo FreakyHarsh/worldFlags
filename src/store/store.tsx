@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { Context } from 'vm';
 
 const initialState = {
-  region: '',
+  region: 'Filter By Region',
 };
 
 const reducer = (state: any, action: { type: string; payload?: any }) => {
   switch (action.type) {
     case 'setRegion':
+      console.log(action);
       return {
         ...state,
         region: action.payload,
