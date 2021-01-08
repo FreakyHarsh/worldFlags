@@ -7,31 +7,31 @@ import { SearchMenu } from '../components/SearchMenu';
 import { getAllCountries } from '../utils/getAllCountries';
 import { getRegionCountries } from '../utils/getRegionCountries';
 import { useStore } from '../store/store';
+import { Actions } from '../types/Actions';
 
 export const Home: React.FC = () => {
-  // const [countries, setCountries] = useState<any[] | null>(null);
   const { region } = useParams<{ region: string }>();
   const {
-    state: { countries },
+    state: { countries, searchInputValue },
     dispatch,
   } = useStore();
+
   useEffect(() => {
     const fetchCountries = async () => {
       const res = await getAllCountries();
-      // setCountries([...res]);
-      dispatch({ type: 'setCountries', payload: [...res] });
+      dispatch({ type: Actions.setCountries, payload: [...res] });
     };
     const fetchRegionCountries = async () => {
       const res = await getRegionCountries(region.toLowerCase());
-      // setCountries([...res]);
-      dispatch({ type: 'setCountries', payload: [...res] });
+      dispatch({ type: Actions.setCountries, payload: [...res] });
     };
     try {
       region ? fetchRegionCountries() : fetchCountries();
     } catch (e) {
       console.log(e);
     }
-  }, [region]);
+  }, [region, searchInputValue]);
+
   const countryList = countries.map((country: any) => (
     <WrapItem key={country.name}>
       <CountryCard
@@ -42,6 +42,7 @@ export const Home: React.FC = () => {
       />
     </WrapItem>
   ));
+
   const notFoundElement = <Box>Not Found</Box>;
   return (
     <div>

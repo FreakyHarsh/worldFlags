@@ -3,11 +3,11 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Stack, Box, Input, Menu, MenuButton, Button, MenuList, MenuItem } from '@chakra-ui/react';
 import { useStore } from '../store/store';
 import { useHistory } from 'react-router-dom';
+import { Actions } from '../types/Actions';
 
 export const SearchMenu: React.FC = () => {
-  const [search, setSearch] = useState('');
   const {
-    state: { region },
+    state: { region, searchInputValue },
     dispatch,
   } = useStore();
 
@@ -20,22 +20,24 @@ export const SearchMenu: React.FC = () => {
   };
   const searchResult = (res: any) => {
     if (!res.status) {
-      dispatch({ type: 'setCountries', payload: [...res] });
+      dispatch({ type: Actions.setCountries, payload: [...res] });
     } else {
-      dispatch({ type: 'setCountries', payload: [] });
+      dispatch({ type: Actions.setCountries, payload: [] });
     }
   };
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      if (search) {
-        const res = await fetch(`https://restcountries.eu/rest/v2/name/${search.toLowerCase()}`)
+      if (searchInputValue) {
+        const res = await fetch(
+          `https://restcountries.eu/rest/v2/name/${searchInputValue.toLowerCase()}`
+        )
           .then((res) => res.json())
           .then((data) => data);
         searchResult(res);
       }
     }, 500);
     return () => clearTimeout(timeout);
-  }, [search]);
+  }, [searchInputValue]);
   const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
   return (
     <div>
@@ -49,10 +51,11 @@ export const SearchMenu: React.FC = () => {
         <Box width={{ md: '50%' }}>
           <Input
             variant='outline'
+            value={searchInputValue}
             placeholder='Search for a country...'
             onChange={(event) => {
               const value = event.target.value;
-              setSearch(value);
+              dispatch({ type: Actions.setSearchInputValue, payload: value });
             }}
           />
         </Box>
