@@ -6,6 +6,7 @@ import { Global } from '@emotion/react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { GlobalWrapper } from './store/store';
+import { CountryInfo } from './pages/CountryInfo';
 
 const Fonts = () => (
   <Global
@@ -27,6 +28,7 @@ export const App = () => (
         <Fonts />
         <Switch>
           <Route path='/' exact component={Home} />
+          <Route path='/country/:country' component={CountryInfo} />
           <Route path='/:region' component={Home} />
         </Switch>
         {/* <Home /> */}

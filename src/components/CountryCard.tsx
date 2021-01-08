@@ -1,5 +1,6 @@
 import { Box, VStack, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 interface CardProps {
   flag: string;
   name: string;
@@ -8,7 +9,7 @@ interface CardProps {
 }
 export const CountryCard = ({ flag, name, population, region }: CardProps) => {
   const bg = useColorModeValue('#FFFFFF', '#222E38');
-
+  const history = useHistory();
   return (
     <div>
       <Box
@@ -18,6 +19,7 @@ export const CountryCard = ({ flag, name, population, region }: CardProps) => {
         maxH='25rem'
         overflow='hidden'
         borderWidth='1px'
+        onClick={() => history.replace('country/' + name)}
       >
         <Box w='16rem' h='10rem'>
           <div

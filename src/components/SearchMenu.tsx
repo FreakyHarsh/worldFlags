@@ -44,13 +44,7 @@ export const SearchMenu: React.FC = () => {
   const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
   return (
     <div>
-      <Stack
-        direction={['column', 'row']}
-        justify='space-between'
-        py={5}
-        spacing='1rem'
-        mx={{ base: '5%' }}
-      >
+      <Stack direction={['column', 'row']} justify='space-between' py={5} spacing='1rem' mx='5%'>
         <Box width={{ md: '50%' }}>
           <Input
             variant='outline'

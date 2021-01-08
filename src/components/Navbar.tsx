@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
         onClick={makeDefaultHandler}
         justify='space-between'
         p={2}
-        mx={{ base: '5%' }}
+        mx='5%'
       >
         <Heading fontSize={[20, 'md', 'lg', 'xl']}>Where in the world?</Heading>
         <ColorModeSwitcher />
