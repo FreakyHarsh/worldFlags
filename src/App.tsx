@@ -21,8 +21,8 @@ const theme = extendTheme({
   },
 });
 export const App = () => (
-  <Router>
-    <ChakraProvider theme={theme}>
+  <ChakraProvider theme={theme}>
+    <Router>
       <GlobalWrapper>
         <Fonts />
         <Switch>
@@ -31,6 +31,6 @@ export const App = () => (
         </Switch>
         {/* <Home /> */}
       </GlobalWrapper>
-    </ChakraProvider>
-  </Router>
+    </Router>
+  </ChakraProvider>
 );

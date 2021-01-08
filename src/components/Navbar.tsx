@@ -6,10 +6,13 @@ import { useStore } from '../store/store';
 import { Actions } from '../types/Actions';
 
 export const Navbar: React.FC = () => {
-  const { dispatch } = useStore();
+  const {
+    state: { clearSearch },
+    dispatch,
+  } = useStore();
   const makeDefaultHandler = () => {
     dispatch({ type: Actions.setRegion, payload: 'Filter By Region' });
-    dispatch({ type: Actions.setSearchInputValue, payload: '' });
+    dispatch({ type: Actions.setClearSearch, payload: !clearSearch });
   };
   return (
     <>

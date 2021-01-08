@@ -5,7 +5,7 @@ import { State } from '../types/State';
 const initialState = {
   region: 'Filter By Region',
   countries: [],
-  searchInputValue: '',
+  clearSearch: false,
 } as State;
 
 const reducer = (state: State, action: { type: string; payload?: any }) => {
@@ -20,10 +20,10 @@ const reducer = (state: State, action: { type: string; payload?: any }) => {
         ...state,
         countries: action.payload,
       };
-    case Actions.setSearchInputValue:
+    case Actions.setClearSearch:
       return {
         ...state,
-        searchInputValue: action.payload,
+        clearSearch: action.payload,
       };
     default:
       return state;

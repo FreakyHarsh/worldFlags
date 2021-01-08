@@ -7,17 +7,22 @@ import { Actions } from '../types/Actions';
 
 export const SearchMenu: React.FC = () => {
   const {
-    state: { region, searchInputValue },
+    state: { region, clearSearch },
     dispatch,
   } = useStore();
 
   let history = useHistory();
-
+  const [search, setSearch] = useState('');
   const onMenuHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const region = (e.target as any).firstChild.data;
     dispatch({ type: 'setRegion', payload: region });
     history.push(region);
   };
+
+  useEffect(() => {
+    setSearch('');
+  }, [clearSearch]);
+
   const searchResult = (res: any) => {
     if (!res.status) {
       dispatch({ type: Actions.setCountries, payload: [...res] });
@@ -27,17 +32,15 @@ export const SearchMenu: React.FC = () => {
   };
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      if (searchInputValue) {
-        const res = await fetch(
-          `https://restcountries.eu/rest/v2/name/${searchInputValue.toLowerCase()}`
-        )
+      if (search) {
+        const res = await fetch(`https://restcountries.eu/rest/v2/name/${search.toLowerCase()}`)
           .then((res) => res.json())
           .then((data) => data);
         searchResult(res);
       }
     }, 500);
     return () => clearTimeout(timeout);
-  }, [searchInputValue]);
+  }, [search]);
   const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
   return (
     <div>
@@ -51,11 +54,12 @@ export const SearchMenu: React.FC = () => {
         <Box width={{ md: '50%' }}>
           <Input
             variant='outline'
-            value={searchInputValue}
+            value={search}
             placeholder='Search for a country...'
             onChange={(event) => {
               const value = event.target.value;
-              dispatch({ type: Actions.setSearchInputValue, payload: value });
+              // dispatch({ type: Actions.setsearch, payload: value });
+              setSearch(value);
             }}
           />
         </Box>

@@ -12,7 +12,7 @@ import { Actions } from '../types/Actions';
 export const Home: React.FC = () => {
   const { region } = useParams<{ region: string }>();
   const {
-    state: { countries, searchInputValue },
+    state: { countries, clearSearch },
     dispatch,
   } = useStore();
 
@@ -30,7 +30,7 @@ export const Home: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
-  }, [region, searchInputValue]);
+  }, [region, clearSearch]);
 
   const countryList = countries.map((country: any) => (
     <WrapItem key={country.name}>
