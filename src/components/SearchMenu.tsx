@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Stack, Box, Input, Menu, MenuButton, Button, MenuList, MenuItem } from '@chakra-ui/react';
 import { useStore } from '../store/store';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 export const SearchMenu: React.FC = () => {
   const [search, setSearch] = useState(null);
@@ -11,6 +11,10 @@ export const SearchMenu: React.FC = () => {
     dispatch,
   } = useStore();
   let history = useHistory();
+  let queryParams = useParams<{ region: string }>();
+  useEffect(() => {
+    console.log(queryParams);
+  }, [region]);
   const onMenuHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const region = (e.target as any).firstChild.data;
     dispatch({ type: 'setRegion', payload: region });
