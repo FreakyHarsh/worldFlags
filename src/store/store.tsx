@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
   region: 'Filter By Region',
+  countries: [],
 };
 
 const reducer = (state: any, action: { type: string; payload?: any }) => {
@@ -11,6 +12,12 @@ const reducer = (state: any, action: { type: string; payload?: any }) => {
       return {
         ...state,
         region: action.payload,
+      };
+    case 'setCountries':
+      console.log(action);
+      return {
+        ...state,
+        countries: action.payload,
       };
     default:
       return state;

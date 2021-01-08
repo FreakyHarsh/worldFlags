@@ -6,19 +6,25 @@ import { Navbar } from '../components/Navbar';
 import { SearchMenu } from '../components/SearchMenu';
 import { getAllCountries } from '../utils/getAllCountries';
 import { getRegionCountries } from '../utils/getRegionCountries';
+import { useStore } from '../store/store';
 
 export const Home: React.FC = () => {
-  const [countries, setCountries] = useState<any[] | null>(null);
+  // const [countries, setCountries] = useState<any[] | null>(null);
   const { region } = useParams<{ region: string }>();
-
+  const {
+    state: { countries },
+    dispatch,
+  } = useStore();
   useEffect(() => {
     const fetchCountries = async () => {
       const res = await getAllCountries();
-      setCountries([...res]);
+      // setCountries([...res]);
+      dispatch({ type: 'setCountries', payload: [...res] });
     };
     const fetchRegionCountries = async () => {
       const res = await getRegionCountries(region.toLowerCase());
-      setCountries([...res]);
+      // setCountries([...res]);
+      dispatch({ type: 'setCountries', payload: [...res] });
     };
     try {
       region ? fetchRegionCountries() : fetchCountries();
@@ -26,6 +32,17 @@ export const Home: React.FC = () => {
       console.log(e);
     }
   }, [region]);
+  const countryList = countries.map((country: any) => (
+    <WrapItem key={country.name}>
+      <CountryCard
+        flag={country.flag}
+        name={country.name}
+        population={country.population}
+        region={country.region}
+      />
+    </WrapItem>
+  ));
+  const notFoundElement = <Box>Not Found</Box>;
   return (
     <div>
       <Navbar />
@@ -33,16 +50,7 @@ export const Home: React.FC = () => {
       {countries && (
         <Box mx={{ base: '5%' }}>
           <Wrap justify='center' spacing='2rem' pt={5}>
-            {countries.map((country) => (
-              <WrapItem key={country.name}>
-                <CountryCard
-                  flag={country.flag}
-                  name={country.name}
-                  population={country.population}
-                  region={country.region}
-                />
-              </WrapItem>
-            ))}
+            {countries.length === 0 ? notFoundElement : countryList}
           </Wrap>
         </Box>
       )}
