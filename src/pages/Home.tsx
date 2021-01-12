@@ -8,6 +8,7 @@ import { getAllCountries } from '../utils/getAllCountries';
 import { getRegionCountries } from '../utils/getRegionCountries';
 import { useStore } from '../store/store';
 import { Actions } from '../types/Actions';
+import { Loader } from '../components/Loader';
 
 export const Home: React.FC = () => {
   const { region } = useParams<{ region: string }>();
@@ -24,13 +25,15 @@ export const Home: React.FC = () => {
     const fetchRegionCountries = async () => {
       const res = await getRegionCountries(region.toLowerCase());
       dispatch({ type: Actions.setCountries, payload: [...res] });
+      dispatch({ type: Actions.setClearSearch, payload: !clearSearch });
     };
     try {
       region ? fetchRegionCountries() : fetchCountries();
     } catch (e) {
       console.log(e);
     }
-  }, [region, clearSearch]);
+  }, [region]);
+  // useEffect(,[region]);
   const countryList = (pageno: number) => {
     let page = countries.slice((pageno - 1) * 8, pageno * 8);
     return page.map((country: any) => (

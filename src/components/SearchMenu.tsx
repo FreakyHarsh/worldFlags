@@ -4,6 +4,8 @@ import { Stack, Box, Input, Menu, MenuButton, Button, MenuList, MenuItem } from 
 import { useStore } from '../store/store';
 import { useHistory } from 'react-router-dom';
 import { Actions } from '../types/Actions';
+import { getAllCountries } from '../utils/getAllCountries';
+import { getSearchedCountry } from '../utils/getSearchedCountry';
 
 export const SearchMenu: React.FC = () => {
   const {
@@ -33,9 +35,10 @@ export const SearchMenu: React.FC = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       if (search) {
-        const res = await fetch(`https://restcountries.eu/rest/v2/name/${search.toLowerCase()}`)
-          .then((res) => res.json())
-          .then((data) => data);
+        const res = await getSearchedCountry(search.toLowerCase());
+        searchResult(res);
+      } else if (search === '') {
+        const res = await getAllCountries();
         searchResult(res);
       }
     }, 500);
@@ -52,7 +55,6 @@ export const SearchMenu: React.FC = () => {
             placeholder='Search for a country...'
             onChange={(event) => {
               const value = event.target.value;
-              // dispatch({ type: Actions.setsearch, payload: value });
               setSearch(value);
             }}
           />
