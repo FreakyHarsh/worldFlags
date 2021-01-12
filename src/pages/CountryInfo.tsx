@@ -1,5 +1,5 @@
 import { ChevronLeftIcon } from '@chakra-ui/icons';
-import { Box, Button, HStack, Image, Stack, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Button, Image, Stack, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
@@ -16,6 +16,18 @@ export const CountryInfo: React.FC = () => {
     };
     fetchInfo();
   }, []);
+  const borderCountries = (
+    <Stack direction={['column', 'row']} py={5} px={[null, 4]}>
+      <Text fontSize={16} fontWeight='600'>
+        Border Countries:
+      </Text>
+      <Wrap>
+        {countryInfo.borders.map((border: any) => (
+          <WrapItem key={border}>{border}</WrapItem>
+        ))}
+      </Wrap>
+    </Stack>
+  );
   const listBuilder = (name: string, key: any) => {
     return (
       <Box fontSize={16} fontWeight='600'>
@@ -64,14 +76,7 @@ export const CountryInfo: React.FC = () => {
                 )}
               </VStack>
             </Stack>
-            <Stack direction={['column', 'row']} py={5} px={[null, 4]}>
-              <Text fontSize={16} fontWeight='600'>
-                Border Countries:
-              </Text>
-              <Wrap>
-                <WrapItem>{countryInfo.borders.map((border: any) => border + ', ')}</WrapItem>
-              </Wrap>
-            </Stack>
+            {countryInfo.borders.length > 0 && borderCountries}
           </Box>
         </Stack>
       )}
